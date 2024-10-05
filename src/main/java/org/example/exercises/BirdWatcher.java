@@ -1,5 +1,6 @@
 package org.example.exercises;
 
+import java.util.Arrays;
 
 class BirdWatcher {
     private final int[] birdsPerDay;
@@ -9,7 +10,7 @@ class BirdWatcher {
     }
 
     public int[] getLastWeek() {
-        return new int[] {0, 2, 5, 3, 7, 8, 4};
+        return this.birdsPerDay;
     }
 
     public int getToday() {
@@ -21,26 +22,19 @@ class BirdWatcher {
     }
 
     public boolean hasDayWithoutBirds() {
-        for (int totalBirds: birdsPerDay) {
-            if (totalBirds == 0) return true;
-        }
-        return false;
+        return Arrays.stream(birdsPerDay).filter(value -> value > 0)
+            .count() != 7;
     }
 
     public int getCountForFirstDays(int numberOfDays) {
-        int count = 0;
-        if (numberOfDays > this.birdsPerDay.length) numberOfDays = this.birdsPerDay.length;
-        for (int i = 0; i < numberOfDays; i++) {
-            count += this.birdsPerDay[i];
-        }
-        return count;
+        return Arrays.stream(birdsPerDay)
+            .limit(numberOfDays)
+            .sum();
     }
 
     public int getBusyDays() {
-        int busyDays = 0;
-        for (int totalBirds: this.birdsPerDay) {
-            if (totalBirds >= 5) busyDays++;
-        }
-        return busyDays;
+        return (int) Arrays.stream(birdsPerDay)
+            .filter(value -> value >= 5)
+            .count();
     }
 }
