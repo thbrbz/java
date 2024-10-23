@@ -1,9 +1,10 @@
 package org.example.exercises;
 
 import java.util.List;
-import java.util.ArrayList;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
-public class DnDCharacter {
+class DnDCharacter {
 
     int strength;
     int dexterity;
@@ -11,26 +12,33 @@ public class DnDCharacter {
     int intelligence;
     int wisdom;
     int charisma;
-    int hitpoints;
 
-    public int ability(List<Integer> scores) {
-         return scores.stream()
-                 .sorted()
-                 .skip(1)
-                 .mapToInt(Integer::valueOf)
-                 .sum();
+    DnDCharacter() {
+        this.strength = this.ability(rollDice());
+        this.dexterity = this.ability(rollDice());
+        this.constitution = this.ability(rollDice());
+        this.intelligence = this.ability(rollDice());
+        this.wisdom = this.ability(rollDice());
+        this.charisma = this.ability(rollDice());
     }
 
-    public List<Integer> rollDice() {
-        List<Integer> numbers = new ArrayList<Integer>();
-        for (int i = 0; i < 4; i++)
-            numbers.add((int) (Math.random() * 6) + 1);
+    int ability(List<Integer> scores) {
+        return scores.stream()
+                .sorted()
+                .skip(1)
+                .mapToInt(Integer::valueOf)
+                .sum();
+    }
 
-        return numbers;
+    List<Integer> rollDice() {
+        return IntStream.range(0, 4)
+                .map(x -> (int) (Math.random() * 6) + 1)
+                .boxed()
+                .collect(Collectors.toList());
     }
 
     int modifier(int input) {
-        throw new UnsupportedOperationException("Delete this statement and write your own implementation.");
+        return Math.floorDiv(input - 10, 2);
     }
 
     int getStrength() {
@@ -58,6 +66,6 @@ public class DnDCharacter {
     }
 
     int getHitpoints() {
-        return this.hitpoints;
+        return this.modifier(this.getConstitution()) + 10;
     }
 }
