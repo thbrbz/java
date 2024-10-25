@@ -1,18 +1,24 @@
 package org.example.exercises.DOT_DLS;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Graph {
-
     private Collection<Node> nodes;
     private Collection<Edge> edges;
     private Map<String, String> attributes;
 
     public Graph() {
+        this.nodes = new ArrayList<Node>();
+        this.edges = new ArrayList<Edge>();
+        this.attributes = new HashMap<String, String>();
     }
 
     public Graph(Map<String, String> attributes) {
+        this.nodes = new ArrayList<Node>();
+        this.edges = new ArrayList<Edge>();
         this.attributes = attributes;
     }
 
@@ -20,36 +26,18 @@ public class Graph {
         return this.nodes;
     }
 
-    public void setNodes(String name) {
-        this.nodes.add(new Node(name));
-    }
-
-    public void setNodes(String name, Map<String, String> attributes) {
-        this.nodes.add(new Node(name, attributes));
-    }
-
     public Collection<Edge> getEdges() {
         return this.edges;
     }
 
-    public void setEdges(String start, String end) {
-        this.edges.add(new Edge(start, end));
-    }
-
-    public void setEdges(String start, String end, Map<String, String> attributes) {
-        this.edges.add(new Edge(start, end, attributes));
-    }
-
     public Graph node(String name) {
-        Graph graph = new Graph();
-        graph.setNodes(name);
-        return graph;
+        this.nodes.add(new Node(name));
+        return this;
     }
 
     public Graph node(String name, Map<String, String> attributes) {
-        Graph graph = new Graph();
-        graph.setNodes(name, attributes);
-        return graph;
+        this.nodes.add(new Node(name, attributes));
+        return this;
     }
 
     public Graph edge(String start, String end) {
