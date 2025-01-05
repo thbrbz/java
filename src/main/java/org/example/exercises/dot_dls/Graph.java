@@ -1,4 +1,4 @@
-package org.example.exercises.DOT_DLS;
+package org.example.exercises.dot_dls;
 
 import java.util.ArrayList;
 import java.util.Collection;

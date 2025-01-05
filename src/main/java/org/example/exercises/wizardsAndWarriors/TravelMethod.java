@@ -1,4 +1,4 @@
-package org.example.exercises.WizardsAndWarriors;
+package org.example.exercises.wizardsAndWarriors;
 
 public enum TravelMethod {
     WALKING,
