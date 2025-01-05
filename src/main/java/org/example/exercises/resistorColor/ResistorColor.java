@@ -1,4 +1,4 @@
-package org.example.exercises;
+package org.example.exercises.resistorColor;
 
 import java.util.Arrays;
 
