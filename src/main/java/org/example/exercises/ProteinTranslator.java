@@ -8,35 +8,9 @@ import java.util.Map;
 class ProteinTranslator {
 
     List<String> translate(String rnaSequence) {
-        if (rnaSequence.length() == 4) throw new IllegalArgumentException("Invalid codon");
 
-        List<String> codons = divideString(rnaSequence);
-        Map<String, String> proteins = getProteins();
         List<String> proteinsList = new ArrayList<String>();
-
-        for (String s : codons) {
-            if (s.equals("UGA") || s.equals("UAG") || s.equals("UAA")) break;
-            if (s.equals("AAA") || s.equals("XYZ")) throw new IllegalArgumentException("Invalid codon");
-            proteinsList.add(proteins.get(s));
-        }
-
-        return proteinsList;
-    }
-
-    List<String> divideString(String str) {
-        int size = str.length();
-        List<String> parts = new ArrayList<String>();
-
-        int i = 0;
-        while (i < size) {
-            parts.add(str.substring(i, Math.min(i + 3, size)));
-            i += 3;
-        }
-
-        return parts;
-    }
-
-    Map<String, String> getProteins() {
+        if (rnaSequence.isEmpty()) return proteinsList;
 
         Map<String, String> proteins = new HashMap<String, String>();
         proteins.put("AUG", "Methionine");
@@ -53,8 +27,17 @@ class ProteinTranslator {
         proteins.put("UGU", "Cysteine");
         proteins.put("UGC", "Cysteine");
         proteins.put("UGG", "Tryptophan");
-        return proteins;
+        proteins.put("UAA", "STOP");
+        proteins.put("UAG", "STOP");
+        proteins.put("UGA", "STOP");
 
+        for (String codon : rnaSequence.split("(?<=\\G...)")) {
+            if (proteins.get(codon) == null)  throw new IllegalArgumentException("Invalid codon");
+            if (proteins.get(codon).equals("STOP")) break;
+            proteinsList.add(proteins.get(codon));
+        }
+
+        return proteinsList;
     }
 
 }
