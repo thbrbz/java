@@ -8,20 +8,16 @@ class HandshakeCalculator {
 
     List<Signal> calculateHandshake(int number) {
 
-        List<Signal> result = new ArrayList<>();
-        String binary = Integer.toBinaryString(number);
+        List<Signal> handshake = new ArrayList<>();
 
-        if (binary.charAt(0) == '1')
-            binary = new StringBuilder(binary).reverse().toString();
+        if ((number & 1) != 0) handshake.add(Signal.WINK);
+        if ((number & 2) != 0) handshake.add(Signal.DOUBLE_BLINK);
+        if ((number & 4) != 0) handshake.add(Signal.CLOSE_YOUR_EYES);
+        if ((number & 8) != 0) handshake.add(Signal.JUMP);
 
-        for (int i = 0; i < Math.min(4, binary.length()); i++)
-            if (binary.charAt(i) == '1')
-                result.add(Signal.values()[i]);
+        if ((number & 16) != 0) Collections.reverse(handshake);
 
-        if  (binary.length() == 5 || number == 51)
-            Collections.reverse(result);
-
-        return result;
+        return handshake;
     }
 
 }
