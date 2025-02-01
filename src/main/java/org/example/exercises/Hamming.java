@@ -1,3 +1,5 @@
+package org.example.exercises;
+
 import java.util.stream.IntStream;
 
 public class Hamming {
