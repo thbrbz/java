@@ -1,16 +1,6 @@
 package org.example.exercises;
 
-class SpaceAge {
-
-    private final double seconds;
-
-    SpaceAge(double seconds) {
-        this.seconds = seconds;
-    }
-
-    double getSeconds() {
-        return this.seconds;
-    }
+record SpaceAge(double seconds) {
 
     double onEarth() {
         return this.seconds / 31557600;
