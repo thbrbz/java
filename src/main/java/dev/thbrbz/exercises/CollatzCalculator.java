@@ -1,22 +1,17 @@
 package dev.thbrbz.exercises;
 
+import java.util.stream.IntStream;
+
 public class CollatzCalculator {
 
     int computeStepCount(int start) {
         if (start < 1)
             throw new IllegalArgumentException("Only positive integers are allowed");
 
-        int count = 0;
-        while (start > 1) {
-            count++;
-            if (start % 2 == 0) {
-                start = start / 2;
-            } else {
-                start = (start * 3) + 1;
-            }
-        }
-
-        return count;
+        return (int) IntStream.iterate(start,
+                num -> num != 1,
+                num -> (num & 1) == 1 ? 3 * num + 1 : num >> 1)
+                .count();
     }
 
 }
