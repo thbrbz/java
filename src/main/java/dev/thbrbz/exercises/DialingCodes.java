@@ -4,10 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DialingCodes {
-    private final Map<Integer, String> countries = new HashMap<>();
+    private final Map<Integer, String> codes = new HashMap<>();
 
     public Map<Integer, String> getCodes() {
-        return this.countries;
+        return this.codes;
     }
 
     public void setDialingCode(Integer code, String country) {
@@ -23,11 +23,12 @@ public class DialingCodes {
     }
 
     public Integer findDialingCode(String country) {
-        for (Map.Entry<Integer, String> entry : this.getCodes().entrySet())
-            if (entry.getValue().equals(country))
-                return entry.getKey();
-
-        return null;
+        return codes.entrySet()
+                .stream()
+                .filter(entry -> entry.getValue().equals(country))
+                .map(entry -> entry.getKey())
+                .findFirst()
+                .orElse(null);
     }
 
     public void updateCountryDialingCode(Integer code, String country) {
